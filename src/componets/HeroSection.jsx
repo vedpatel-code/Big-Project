@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Brand from "./Brand";
 import {
@@ -11,8 +11,13 @@ const HeroSection = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isSignedIn } = useUser();
 
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "auto";
+  }, [menuOpen]);
+
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 overflow-x-hidden">
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm bg-white/70 backdrop-blur">
         <Link to="/" className="font-semibold text-lg">
@@ -21,10 +26,10 @@ const HeroSection = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8 text-slate-800">
-          <Link to="/" className="hover:text-indigo-600 transition">Home</Link>
-          <a href="#features" className="hover:text-indigo-600 transition">Features</a>
-          <a href="#testimonials" className="hover:text-indigo-600 transition">Testimonials</a>
-          <Link to="/contact" className="hover:text-indigo-600 transition">Contact</Link>
+          <Link to="/" className="hover:text-indigo-600">Home</Link>
+          <a href="#features" className="hover:text-indigo-600">Features</a>
+          <a href="#testimonials" className="hover:text-indigo-600">Testimonials</a>
+          <Link to="/contact" className="hover:text-indigo-600">Contact</Link>
         </div>
 
         {/* Auth + Mobile Toggle */}
@@ -33,7 +38,7 @@ const HeroSection = () => {
             <UserButton afterSignOutUrl="/" />
           ) : (
             <SignInButton mode="modal">
-              <button className="hidden md:block px-6 py-2 bg-indigo-500 hover:bg-indigo-700 active:scale-95 transition-all rounded-full text-white">
+              <button className="hidden md:block px-6 py-2 bg-indigo-500 hover:bg-indigo-600 rounded-full text-white transition">
                 Login
               </button>
             </SignInButton>
@@ -41,48 +46,54 @@ const HeroSection = () => {
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setMenuOpen(prev => !prev)}
-            className="md:hidden active:scale-90 transition"
+            onClick={() => setMenuOpen(true)}
+            className="md:hidden"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M4 5h16M4 12h16M4 19h16" />
             </svg>
           </button>
         </div>
       </nav>
 
-      {/* ================= MOBILE MENU ================= */}
+      {/* ================= FULLSCREEN MOBILE MENU ================= */}
       <div
-        className={`fixed inset-0 z-[100] bg-black/50 backdrop-blur flex flex-col items-center justify-center gap-8 text-lg text-white md:hidden transition-all duration-300 ${
-          menuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-[100] bg-white/80 backdrop-blur-xl
+        transition-transform duration-300 ease-in-out
+        ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-        <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
-        <a href="#testimonials" onClick={() => setMenuOpen(false)}>Testimonials</a>
-        <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-
-        {isSignedIn ? (
-          <UserButton afterSignOutUrl="/" />
-        ) : (
-          <SignInButton mode="modal">
-            <button className="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-full">
-              Login
-            </button>
-          </SignInButton>
-        )}
-
+        {/* Close */}
         <button
           onClick={() => setMenuOpen(false)}
-          className="mt-6 size-10 flex items-center justify-center bg-white text-black rounded-md"
+          className="absolute top-6 right-6 text-3xl text-slate-800"
         >
           ✕
         </button>
+
+        {/* Menu Content */}
+        <div className="flex flex-col items-center justify-center h-full gap-10 text-2xl font-medium text-slate-800">
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+          <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
+          <a href="#testimonials" onClick={() => setMenuOpen(false)}>Testimonials</a>
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+
+          <div className="pt-8">
+            {isSignedIn ? (
+              <UserButton afterSignOutUrl="/" />
+            ) : (
+              <SignInButton mode="modal">
+                <button className="bg-indigo-600 text-white px-10 py-3 rounded-full">
+                  Login
+                </button>
+              </SignInButton>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* ================= HERO ================= */}
-      <section className="relative flex flex-col items-center justify-center text-sm px-4 md:px-16 lg:px-24 xl:px-40 text-black">
-        <div className="absolute top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 bg-indigo-300 blur-[100px] opacity-30"></div>
+      <section className="relative flex flex-col items-center text-center px-4 md:px-16 lg:px-24 xl:px-40 text-black">
+        <div className="absolute top-24 -z-10 left-1/4 size-96 bg-indigo-300 blur-[100px] opacity-30"></div>
 
         {/* Social Proof */}
         <div className="flex items-center mt-24">
@@ -96,55 +107,42 @@ const HeroSection = () => {
               <img
                 key={i}
                 src={img}
-                alt="user"
+                alt=""
                 className="size-8 rounded-full border-2 border-white"
               />
             ))}
           </div>
 
-          <div>
-            <div className="flex">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-indigo-600">
-                  <path d="M12 2l2.3 4.7 5.2.8-3.7 3.6.9 5.1L12 18.8l-4.6 2.4.9-5.1L4.5 7.5l5.2-.8z" />
-                </svg>
-              ))}
-            </div>
-            <p className="text-sm text-gray-700">Used by 10,000+ users</p>
-          </div>
+          <p className="text-sm text-gray-700">Used by 10,000+ users</p>
         </div>
 
         {/* Headline */}
-        <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl text-center mt-6 md:leading-[70px]">
-          Build stunning websites with{" "}
+        <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl mt-6">
+          Build anything with{" "}
           <span className="bg-gradient-to-r from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
-            PrebuiltUI
-          </span>{" "}
-          Components
+            this website.
+          </span>
         </h1>
 
-        <p className="max-w-md text-center text-base my-7">
-          Explore a growing library of over 320+ beautifully crafted,
-          customizable components.
+        <p className="max-w-md text-base my-7">
+          I design and build modern, high-performance websites and AI-powered tools that convert visitors into users.
         </p>
 
         {/* CTA */}
-        <div className="flex items-center gap-4">
+        <div className="flex gap-4">
           <Link
             to="/"
-            className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-9 h-12 flex items-center transition"
+            className="bg-indigo-500 hover:bg-indigo-600 text-white rounded-full px-9 h-12 flex items-center"
           >
             Get started
           </Link>
 
-          <button className="flex items-center gap-2 border border-slate-400 hover:bg-indigo-50 transition rounded-full px-7 h-12 text-slate-700">
+          <button className="border border-slate-400 rounded-full px-7 h-12">
             ▶ Try demo
           </button>
         </div>
 
-        <p className="py-6 text-slate-600 mt-14">
-          Trusted by leading brands
-        </p>
+        <p className="py-6 text-slate-600 mt-14">Trusted by leading brands</p>
 
         <div className="w-full max-w-5xl overflow-x-auto">
           <Brand />

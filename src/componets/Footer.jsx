@@ -5,21 +5,10 @@ const Footer = () => {
     {
       title: "Quick Links",
       links: [
-        { label: "Home", path: "/" },
-        { label: "About Us", path: "/about" },
-        { label: "Offers & Deals", path: "/offers" },
-        { label: "Contact Us", path: "/contact" },
-        { label: "FAQs", path: "/faqs" },
-      ],
-    },
-    {
-      title: "Need Help?",
-      links: [
-        { label: "Delivery Information", path: "/delivery-info" },
-        { label: "Return & Refund Policy", path: "/returns" },
-        { label: "Payment Methods", path: "/payments" },
-        { label: "Track Your Order", path: "/track-order" },
-        { label: "Contact Us", path: "/contact" },
+        { label: "Project", path: "/projects/jh2345kjh334hhk2i343er" },
+        { label: "About Us", path: "https://vedport.vercel.app/" },
+        { label: "Contact Us", path: "/contact/73sds129dfdw3424sds" },
+        { label: "My Skills", path: "/skills/08wa3sdw06dd5v0qe9qw42"},
       ],
     },
     {
@@ -28,6 +17,13 @@ const Footer = () => {
         { label: "LinkedIn", path: "https://www.linkedin.com/in/ved-patel-65a39133b/", external: true },
         { label: "Twitter", path: "https://x.com/VedPatel171094", external: true },
         { label: "GitHub", path: "https://github.com/vedpatel-code", external: true },
+      ],
+    },
+    {
+      title: "Legal",
+      links: [
+        { label: "Privacy", path: "/privacy/545dfsd4454sdf44df5", external: true },
+        { label: "Terms", path: "/terms/234lf234nnjo2o3o6n22ljn", external: true },
       ],
     },
   ];
