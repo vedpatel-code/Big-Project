@@ -8,7 +8,6 @@ const Footer = () => {
         { label: "Project", path: "/projects/jh2345kjh334hhk2i343er" },
         { label: "About Us", path: "https://vedport.vercel.app/" },
         { label: "Contact Us", path: "/contact/73sds129dfdw3424sds" },
-        { label: "My Skills", path: "/skills/08wa3sdw06dd5v0qe9qw42"},
       ],
     },
     {

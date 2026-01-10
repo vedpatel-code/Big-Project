@@ -74,7 +74,7 @@ const HeroSection = () => {
         <div className="flex flex-col items-center justify-center h-full gap-10 text-2xl font-medium text-slate-800">
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           <a href="#features" onClick={() => setMenuOpen(false)}>Features</a>
-          <a href="#testimonials" onClick={() => setMenuOpen(false)}>Testimonials</a>
+          <Link to="/projects/jh2345kjh334hhk2i343er" onClick={() => setMenuOpen(false)}>Projects</Link>
           <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
 
           <div className="pt-8">
@@ -141,8 +141,8 @@ const HeroSection = () => {
             ▶ Try demo
           </button>
         </div>
-
         <p className="py-6 text-slate-600 mt-14">Trusted by leading brands</p>
+                <div className='w-full max-w-[800px] h-[3px] mt-10 bg-linear-to-r from-white/10 via-violet-600 to-white/10'></div>
 
         <div className="w-full max-w-5xl overflow-x-auto">
           <Brand />
